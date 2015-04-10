@@ -4,6 +4,7 @@ import argparse
 import time
 import sys
 
+from subprocess import Popen, PIPE
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -20,6 +21,10 @@ if __name__ == '__main__':
                         type=str)
     parser.add_argument('-t', '--token', help='Tokens are not needed anymore. '
                         'Option is left here for compability', type=str)
+    parser.add_argument('-l', '--channelurl', help='prints url for each online channel', action='store_true')
+
+    parser.add_argument('-T', '--channeltitle', help='print title for each online channel', action='store_true')
+
     args = parser.parse_args()
     if not args.nick and not args.user:
         print('You have to pass atleast either -c/--nick or '
@@ -43,6 +48,13 @@ if __name__ == '__main__':
         for chan in new:
             if chan[1]:
                 print(chan[0])
+                if args.channelurl:
+                    print('http://twitch.tv/' + chan[0])
+                if args.channeltitle:
+                    titleargs = ['/home/spill/bin/gits/TwitchNotifier/twitchtitle.sh',
+                            'http://twitch.tv/' + chan[0] ]
+                    p = Popen( titleargs, stdout=PIPE, stderr=PIPE)
+                    outmsg, errmsg = p.communicate()
         del(api)
         sys.exit()
 
