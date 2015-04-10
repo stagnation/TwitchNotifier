@@ -1,3 +1,20 @@
+Fork changes
+============
+added two quick and dirty output options for listing online channels
+
+-l to print the url of an online channel, useful for piping to livestreamer or mpv, I personally use this with my streampy script.
+
+-T to print the title of a broadcast, is run in a rudimentary shell script which takes forever. Fixing this with a proper webparsers would be nice
+
+example call:
+
+``$ <twitchnotifier> -c <user> -nl -T``
+``$ ~/bin/gits/TwitchNotifier/twitchnotifier -c 1b59d9bd844d438daed1 -nl -T``
+
+Original readme
+===============
+
+
 # TwitchNotifier
 A simple python application that sits in the background and notifies you when some channel you follow comes up online or goes offline.
 
