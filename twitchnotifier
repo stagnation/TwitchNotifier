@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 import library
 import argparse
 import time
@@ -51,10 +51,16 @@ if __name__ == '__main__':
                 if args.channelurl:
                     print('http://twitch.tv/' + chan[0])
                 if args.channeltitle:
-                    titleargs = ['/home/spill/bin/gits/TwitchNotifier/twitchtitle.sh',
-                            'http://twitch.tv/' + chan[0] ]
+                    titleargs = 'bash /home/spill/bin/gits/TwitchNotifier/twitchtitle.sh {}'
+                    streamurl ='http://twitch.tv/' + chan[0]
+                    titleargs = titleargs.format(streamurl).split(' ')
                     p = Popen( titleargs, stdout=PIPE, stderr=PIPE)
                     outmsg, errmsg = p.communicate()
+                    if isinstance(outmsg, bytes):
+                        outmsg = outmsg.decode('UTF-8', 'ignore')
+                    print( outmsg )
+
+
         del(api)
         sys.exit()
 
